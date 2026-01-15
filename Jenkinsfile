@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         APP_NAME = "todo-backend"
+        BUILD_ID = "dontKillMe"
     }
 
     stages {
@@ -28,8 +29,10 @@ pipeline {
         stage('Start / Restart App') {
             steps {
                 sh '''
-                  pm2 delete ${APP_NAME} || true
-                  pm2 start dist/main.js --name ${APP_NAME}
+                  pm2 delete todo-backend || true
+                  pm2 start dist/main.js \
+                    --name todo-backend \
+                    --cwd "$WORKSPACE"
                 '''
             }
         }
